@@ -196,10 +196,7 @@ func (q *queries) InsertObservation(ctx context.Context, observation domain.Qual
         score_millis, recorded_at, received_at) VALUES(?, ?, ?, ?, ?, ?, ?)`, observation.ID,
 		observation.InferenceRunID, observation.MetricKey, observation.Sequence, observation.Score,
 		formatTime(observation.RecordedAt), formatTime(observation.ReceivedAt))
-	if err != nil {
-		return domain.ConstraintFailure("insert score observation", err)
-	}
-	return nil
+	return translateError("insert score observation", err)
 }
 
 func (q *queries) InsertDriftIncident(ctx context.Context, drift_incident domain.DriftIncident) error {
